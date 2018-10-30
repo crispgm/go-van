@@ -8,10 +8,10 @@ type Path string
 
 // Deploy Modes
 const (
-	RSync Mode = "rsync"
+	ModeRSync Mode = "rsync"
 )
 
 // Deployer of a deploy method
 type Deployer interface {
-	Run(Path, Path) int
+	Run(Path, Path) error
 }
