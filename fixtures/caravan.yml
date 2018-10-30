@@ -1,0 +1,10 @@
+master:
+  src: .
+  dst: ~/test/
+  debug: false
+  deploy_mode: rsync
+  incremental: true
+  exclude:
+  - .git
+  - .svn
+  once: false

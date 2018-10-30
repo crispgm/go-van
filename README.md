@@ -1,2 +1,3 @@
 # go-van
-Go implementation of Caravan
+
+(WIP) Go implementation of [Caravan](https://github.com/crispgm/caravan).
