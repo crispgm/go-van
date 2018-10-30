@@ -23,7 +23,7 @@ type Conf struct {
 var DefaultConf = Conf{
 	Source:      ".",
 	Destination: ".",
-	Mode:        deploy.RSync,
+	Mode:        deploy.ModeRSync,
 	Incremental: true,
 	Once:        false,
 	Debug:       false,
