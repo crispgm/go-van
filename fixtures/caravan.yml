@@ -1,6 +1,6 @@
 master:
-  src: .
-  dst: ~/test/
+  src: /Users/david/dev/test/from/
+  dst: /Users/david/dev/test/to
   debug: false
   deploy_mode: rsync
   incremental: true

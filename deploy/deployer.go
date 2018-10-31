@@ -13,5 +13,5 @@ const (
 
 // Deployer of a deploy method
 type Deployer interface {
-	Run(Path, Path) error
+	Run(string, string) error
 }

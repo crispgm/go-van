@@ -2,7 +2,12 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
+
+	"github.com/crispgm/go-van/deploy"
+
+	"github.com/crispgm/go-van"
+	"github.com/rjeczalik/notify"
 )
 
 var (
@@ -18,13 +23,18 @@ func main() {
 	flag.Parse()
 
 	if initYAML {
-		fmt.Println("Init")
+		log.Println("Init")
 	} else {
-		conf, err := LoadFrom(confName, specName)
+		conf, err := van.LoadFrom(confName, specName)
 		if err != nil {
-			fmt.Println("Load conf failed: ", err)
+			log.Println("Load conf failed: ", err)
 			return
 		}
-		fmt.Println(conf)
+		log.Println(conf)
+		deployer := deploy.RSync{}
+		van.Watch(conf.Source, func(ei notify.EventInfo) error {
+			err := deployer.Run(conf.Source, conf.Destination)
+			return err
+		})
 	}
 }

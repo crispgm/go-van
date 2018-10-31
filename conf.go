@@ -1,4 +1,4 @@
-package main
+package van
 
 import (
 	"errors"
@@ -10,8 +10,8 @@ import (
 
 // Conf of van
 type Conf struct {
-	Source      deploy.Path `yaml:"src"`
-	Destination deploy.Path `yaml:"dst"`
+	Source      string      `yaml:"src"`
+	Destination string      `yaml:"dst"`
 	Mode        deploy.Mode `yaml:"deploy_mode"`
 	Once        bool        `yaml:"once"`
 	Debug       bool        `yaml:"debug"`
