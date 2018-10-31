@@ -2,11 +2,11 @@ package main
 
 import (
 	"flag"
-	"log"
-
-	"github.com/crispgm/go-van/deploy"
+	"fmt"
+	"time"
 
 	"github.com/crispgm/go-van"
+	"github.com/crispgm/go-van/deploy"
 	"github.com/rjeczalik/notify"
 )
 
@@ -23,18 +23,42 @@ func main() {
 	flag.Parse()
 
 	if initYAML {
-		log.Println("Init")
+		van.PrintNotice("Init")
 	} else {
+		van.PrintNotice("Reading configuration...")
 		conf, err := van.LoadFrom(confName, specName)
 		if err != nil {
-			log.Println("Load conf failed: ", err)
+			van.PrintError("Load conf failed:", err)
 			return
 		}
-		log.Println(conf)
+		showConf(conf)
+		van.PrintNotice("Starting to watch...")
 		deployer := deploy.RSync{}
 		van.Watch(conf.Source, func(ei notify.EventInfo) error {
-			err := deployer.Run(conf.Source, conf.Destination)
+			van.PrintNotice(getTime(), "Event", ei.Event().String, ei.Path())
+			output, err := deployer.Run(conf.Source, conf.Destination)
+			if err != nil {
+				van.PrintSuccess(output)
+			}
 			return err
 		})
 	}
+}
+
+func getTime() string {
+	t := time.Now()
+	return fmt.Sprintf("%02d:%02d:%02d", t.Hour(), t.Minute(), t.Second())
+}
+
+func showConf(conf *van.Conf) {
+	if conf == nil {
+		return
+	}
+	van.PrintNotice("=>", "debug:", conf.Debug)
+	van.PrintNotice("=>", "once:", conf.Once)
+	van.PrintNotice("=>", "src:", conf.Source)
+	van.PrintNotice("=>", "dst:", conf.Destination)
+	van.PrintNotice("=>", "deploy_mode:", conf.Mode)
+	van.PrintNotice("=>", "incremental:", conf.Incremental)
+	van.PrintNotice("=>", "exclude:", conf.Exclude)
 }
