@@ -1,7 +1,8 @@
 package van
 
 import (
-	"log"
+	"fmt"
+	"time"
 
 	"github.com/rjeczalik/notify"
 )
@@ -10,19 +11,26 @@ import (
 type HandleFunc func(notify.EventInfo) error
 
 // Watch a path
-func Watch(path string, handleFunc HandleFunc) {
+func Watch(conf Conf, handleFunc HandleFunc) {
 	c := make(chan notify.EventInfo, 1)
 
 	for {
-		if err := notify.Watch(path, c, notify.All); err != nil {
-			log.Fatal(err)
+		if err := notify.Watch(conf.Source, c, notify.All); err != nil {
+			panic(err)
 		}
 		defer notify.Stop(c)
 
 		// Block until an event is received.
 		ei := <-c
-		log.Println("Got event:", ei)
+		PrintNotice(getTime(), "Event", ei.Event().String, ei.Path())
 		err := handleFunc(ei)
-		log.Println("Handle event:", err)
+		if err != nil {
+			PrintError("Handle event error:", err)
+		}
 	}
+}
+
+func getTime() string {
+	t := time.Now()
+	return fmt.Sprintf("%02d:%02d:%02d", t.Hour(), t.Minute(), t.Second())
 }

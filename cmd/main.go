@@ -2,11 +2,8 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"time"
 
 	"github.com/crispgm/go-van"
-	"github.com/crispgm/go-van/deploy"
 	"github.com/rjeczalik/notify"
 )
 
@@ -34,20 +31,23 @@ func main() {
 		showConf(conf)
 		van.PrintNotice("Starting to watch...")
 		deployer := deploy.RSync{}
-		van.Watch(conf.Source, func(ei notify.EventInfo) error {
-			van.PrintNotice(getTime(), "Event", ei.Event().String, ei.Path())
-			output, err := deployer.Run(conf.Source, conf.Destination)
-			if err != nil {
-				van.PrintSuccess(output)
-			}
-			return err
+
+		if conf.Once {
+			return deploy(conf)
+		}
+
+		van.Watch(conf, func(ei notify.EventInfo) error {
+			return deploy(conf)
 		})
 	}
 }
 
-func getTime() string {
-	t := time.Now()
-	return fmt.Sprintf("%02d:%02d:%02d", t.Hour(), t.Minute(), t.Second())
+func deploy(conf van.Conf) {
+	output, err := deployer.Run(conf.Source, conf.Destination)
+	if err != nil {
+		van.PrintSuccess(output)
+	}
+	return err
 }
 
 func showConf(conf *van.Conf) {
