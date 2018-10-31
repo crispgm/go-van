@@ -4,6 +4,7 @@ import (
 	"flag"
 
 	"github.com/crispgm/go-van"
+	"github.com/crispgm/go-van/deploy"
 	"github.com/rjeczalik/notify"
 )
 
@@ -33,16 +34,17 @@ func main() {
 		deployer := deploy.RSync{}
 
 		if conf.Once {
-			return deploy(conf)
+			handleDeploy(*conf, deployer)
+			return
 		}
 
-		van.Watch(conf, func(ei notify.EventInfo) error {
-			return deploy(conf)
+		van.Watch(*conf, func(ei notify.EventInfo) error {
+			return handleDeploy(*conf, deployer)
 		})
 	}
 }
 
-func deploy(conf van.Conf) {
+func handleDeploy(conf van.Conf, deployer deploy.Deployer) error {
 	output, err := deployer.Run(conf.Source, conf.Destination)
 	if err != nil {
 		van.PrintSuccess(output)
