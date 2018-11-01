@@ -18,14 +18,19 @@ var (
 
 func main() {
 	flag.BoolVar(&initYAML, "init", false, "Generate caravan.yml in current path.")
-	flag.StringVar(&confName, "conf", "caravan.yml", "Config file name. Default: `caravan.yml`.")
+	flag.StringVar(&confName, "conf", caravan.DefaultConfName, "Config file name. Default: `caravan.yml`.")
 	flag.StringVar(&specName, "spec", caravan.DefaultSpec, "Spec name. Default: `master`.")
 	flag.Parse()
 
 	if initYAML {
 		caravan.PrintNotice("Creating `caravan.yml`...")
 		cwd, _ := os.Getwd()
-		err := caravan.CreateDefault(fmt.Sprintf("%s/%s", cwd, caravan.DefaultConfName))
+		confPath := fmt.Sprintf("%s/%s", cwd, caravan.DefaultConfName)
+		if _, err := os.Stat(confPath); !os.IsNotExist(err) {
+			caravan.PrintError("File existed:", confPath)
+			return
+		}
+		err := caravan.CreateDefault(confPath)
 		if err != nil {
 			caravan.PrintError("Create default conf failed:", err)
 			return
