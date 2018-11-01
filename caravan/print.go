@@ -1,4 +1,4 @@
-package van
+package caravan
 
 import "github.com/fatih/color"
 

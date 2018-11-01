@@ -1,4 +1,4 @@
-package van
+package caravan
 
 import (
 	"fmt"
