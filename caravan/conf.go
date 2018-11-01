@@ -30,6 +30,13 @@ var DefaultConf = Conf{
 	Exclude:     []string{".git", ".svn", "/node_modules"},
 }
 
+const (
+	// DefaultSpec ...
+	DefaultSpec = "master"
+	// DefaultConfName ...
+	DefaultConfName = "caravan.yml"
+)
+
 // LoadFrom loads conf from path
 func LoadFrom(path, spec string) (*Conf, error) {
 	yamlFile, err := ioutil.ReadFile(path)
@@ -45,4 +52,15 @@ func LoadFrom(path, spec string) (*Conf, error) {
 		return &spec, nil
 	}
 	return nil, errors.New("No spec")
+}
+
+// CreateDefault conf
+func CreateDefault(path string) error {
+	var defaultConf = make(map[string]Conf, 0)
+	defaultConf[DefaultSpec] = DefaultConf
+	out, err := yaml.Marshal(defaultConf)
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(path, out, 0666)
 }

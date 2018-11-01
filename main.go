@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"os"
 
 	"github.com/crispgm/go-van/caravan"
 	"github.com/crispgm/go-van/deploy"
@@ -17,11 +19,18 @@ var (
 func main() {
 	flag.BoolVar(&initYAML, "init", false, "Generate caravan.yml in current path.")
 	flag.StringVar(&confName, "conf", "caravan.yml", "Config file name. Default: `caravan.yml`.")
-	flag.StringVar(&specName, "spec", "master", "Spec name. Default: `master`.")
+	flag.StringVar(&specName, "spec", caravan.DefaultSpec, "Spec name. Default: `master`.")
 	flag.Parse()
 
 	if initYAML {
-		caravan.PrintNotice("Init")
+		caravan.PrintNotice("Creating `caravan.yml`...")
+		cwd, _ := os.Getwd()
+		err := caravan.CreateDefault(fmt.Sprintf("%s/%s", cwd, caravan.DefaultConfName))
+		if err != nil {
+			caravan.PrintError("Create default conf failed:", err)
+			return
+		}
+		caravan.PrintNotice("Make sure to specify `src` and `dst` to watch and deploy to right place.")
 	} else {
 		caravan.PrintNotice("Reading configuration...")
 		conf, err := caravan.LoadFrom(confName, specName)
