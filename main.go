@@ -43,7 +43,7 @@ func main() {
 			caravan.PrintError("Load conf failed:", err)
 			return
 		}
-		showConf(conf)
+		caravan.ShowConf(conf)
 		caravan.PrintNotice("Starting to watch...")
 		deployer := deploy.RSync{}
 
@@ -53,6 +53,17 @@ func main() {
 		}
 
 		caravan.Watch(*conf, func(ei notify.EventInfo) error {
+			f := caravan.NewFilter(conf.Exclude)
+			match, err := f.Exclude(ei.Path())
+			if err != nil {
+				caravan.PrintError("Exclude failed:", err)
+				return nil
+			}
+			caravan.PrintSuccess(ei.Path())
+			if match {
+				caravan.PrintSuccess(ei.Path(), "is ignored")
+				return nil
+			}
 			return handleDeploy(*conf, deployer)
 		})
 	}
@@ -64,17 +75,4 @@ func handleDeploy(conf caravan.Conf, deployer deploy.Deployer) error {
 		caravan.PrintSuccess(output)
 	}
 	return err
-}
-
-func showConf(conf *caravan.Conf) {
-	if conf == nil {
-		return
-	}
-	caravan.PrintNotice("=>", "debug:", conf.Debug)
-	caravan.PrintNotice("=>", "once:", conf.Once)
-	caravan.PrintNotice("=>", "src:", conf.Source)
-	caravan.PrintNotice("=>", "dst:", conf.Destination)
-	caravan.PrintNotice("=>", "deploy_mode:", conf.Mode)
-	caravan.PrintNotice("=>", "incremental:", conf.Incremental)
-	caravan.PrintNotice("=>", "exclude:", conf.Exclude)
 }

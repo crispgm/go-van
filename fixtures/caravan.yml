@@ -6,5 +6,4 @@ master:
   incremental: true
   exclude:
   - .git
-  - .svn
   once: false
