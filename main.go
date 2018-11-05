@@ -59,7 +59,6 @@ func main() {
 				caravan.PrintError("Exclude failed:", err)
 				return nil
 			}
-			caravan.PrintSuccess(ei.Path())
 			if match {
 				caravan.PrintSuccess(ei.Path(), "is ignored")
 				return nil
