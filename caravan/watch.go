@@ -2,6 +2,7 @@ package caravan
 
 import (
 	"fmt"
+	"path/filepath"
 	"time"
 
 	"github.com/rjeczalik/notify"
@@ -15,7 +16,11 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 	c := make(chan notify.EventInfo, 1)
 
 	for {
-		if err := notify.Watch(conf.Source, c, notify.All); err != nil {
+		realPath, err := filepath.Abs(conf.Source)
+		if err != nil {
+			panic(err)
+		}
+		if err := notify.Watch(realPath, c, notify.All); err != nil {
 			panic(err)
 		}
 		defer notify.Stop(c)
@@ -23,7 +28,7 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 		// Block until an event is received.
 		ei := <-c
 		PrintNotice(getTime(), "Event", ei.Event().String, ei.Path())
-		err := handleFunc(ei)
+		err = handleFunc(ei)
 		if err != nil {
 			PrintError("Handle event error:", err)
 		}
