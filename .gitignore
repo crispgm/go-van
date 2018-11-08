@@ -12,3 +12,4 @@
 *.out
 go-van
 coverage.txt
+/fixtures/testoutput/*

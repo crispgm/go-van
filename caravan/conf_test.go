@@ -15,3 +15,9 @@ func TestLoadConf(t *testing.T) {
 	_, err = LoadFrom("../fixtures/caravan.yml", "not_master")
 	assert.Error(t, err)
 }
+
+func TestCreateDefault(t *testing.T) {
+	err := CreateDefault("../fixtures/testoutput/caravan.yml")
+	assert.NoError(t, err)
+	assert.FileExists(t, "../fixtures/testoutput/caravan.yml")
+}
