@@ -1,5 +1,8 @@
 # go-van
 
+![travis](https://travis-ci.org/crispgm/go-van.svg?branch=master)
+![codecov](https://codecov.io/gh/crispgm/go-van/branch/master/graph/badge.svg)
+
 Go implementation of [Caravan](https://github.com/crispgm/caravan).
 
 ## Installation
