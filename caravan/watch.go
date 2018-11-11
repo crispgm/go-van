@@ -2,6 +2,7 @@ package caravan
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"time"
 
@@ -17,6 +18,7 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 
 	for {
 		realPath, err := filepath.Abs(conf.Source)
+		// os.Oep
 		if err != nil {
 			panic(err)
 		}
@@ -38,4 +40,16 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 func getTime() string {
 	t := time.Now()
 	return fmt.Sprintf("%02d:%02d:%02d", t.Hour(), t.Minute(), t.Second())
+}
+
+func isDir(realpath string) bool {
+	fi, err := os.Stat(realpath)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	if mode := fi.Mode(); mode.IsDir() {
+		return true
+	}
+	return false
 }
