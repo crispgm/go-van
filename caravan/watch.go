@@ -1,6 +1,7 @@
 package caravan
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,18 +13,19 @@ import (
 // HandleFunc of notify
 type HandleFunc func(notify.EventInfo) error
 
+var errTestBreak = errors.New("test break")
+
 // Watch a path
 func Watch(conf Conf, handleFunc HandleFunc) {
 	c := make(chan notify.EventInfo, 1)
 
 	for {
 		realPath, err := filepath.Abs(conf.Source)
-		if isDir(realPath) {
-			realPath += "/..."
-		}
-		// os.Oep
 		if err != nil {
 			panic(err)
+		}
+		if isDir(realPath) {
+			realPath += "/..."
 		}
 		if err := notify.Watch(realPath, c, notify.All); err != nil {
 			panic(err)
@@ -36,6 +38,9 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 		err = handleFunc(ei)
 		if err != nil {
 			PrintError("Handle event error:", err)
+		}
+		if err == errTestBreak {
+			break
 		}
 	}
 }
