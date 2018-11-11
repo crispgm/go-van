@@ -18,6 +18,9 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 
 	for {
 		realPath, err := filepath.Abs(conf.Source)
+		if isDir(realPath) {
+			realPath += "/..."
+		}
 		// os.Oep
 		if err != nil {
 			panic(err)
@@ -42,8 +45,8 @@ func getTime() string {
 	return fmt.Sprintf("%02d:%02d:%02d", t.Hour(), t.Minute(), t.Second())
 }
 
-func isDir(realpath string) bool {
-	fi, err := os.Stat(realpath)
+func isDir(realPath string) bool {
+	fi, err := os.Stat(realPath)
 	if err != nil {
 		fmt.Println(err)
 		return false
