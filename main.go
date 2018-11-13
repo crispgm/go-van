@@ -60,7 +60,7 @@ func main() {
 				return nil
 			}
 			if match {
-				caravan.PrintSuccess(ei.Path(), "is ignored")
+				caravan.PrintLog(ei.Path(), "is ignored")
 				return nil
 			}
 			return handleDeploy(*conf, deployer)

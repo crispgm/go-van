@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"time"
 
 	"github.com/rjeczalik/notify"
 )
@@ -34,7 +33,7 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 
 		// Block until an event is received.
 		ei := <-c
-		PrintNotice(getTime(), "Event", ei.Event().String, ei.Path())
+		PrintLog("Event", ei.Event().String, ei.Path())
 		err = handleFunc(ei)
 		if err != nil {
 			PrintError("Handle event error:", err)
@@ -43,11 +42,6 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 			break
 		}
 	}
-}
-
-func getTime() string {
-	t := time.Now()
-	return fmt.Sprintf("%02d:%02d:%02d", t.Hour(), t.Minute(), t.Second())
 }
 
 func isDir(realPath string) bool {
