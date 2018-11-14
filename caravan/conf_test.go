@@ -14,6 +14,8 @@ func TestLoadConf(t *testing.T) {
 	assert.NoError(t, err)
 	_, err = LoadFrom("../fixtures/caravan.yml", "not_master")
 	assert.Error(t, err)
+	_, err = LoadFrom("../fixtures/caravan_wrong.yml", "master")
+	assert.Error(t, err)
 }
 
 func TestCreateDefault(t *testing.T) {

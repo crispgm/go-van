@@ -11,8 +11,17 @@ func TestExclusion(t *testing.T) {
 	f := NewFilter([]string{".git", ".svn", "/node_modules"})
 	res, _ = f.Exclude(".git")
 	assert.Equal(t, true, res)
+	res, _ = f.Exclude(".git")
+	assert.Equal(t, true, res)
 	res, _ = f.Exclude(".git1")
 	assert.Equal(t, true, res)
 	res, _ = f.Exclude(".g1t")
 	assert.Equal(t, false, res)
+}
+
+func TestExclusionRegexErr(t *testing.T) {
+	f := NewFilter([]string{"+"})
+	res, err := f.Exclude(".git")
+	assert.Equal(t, false, res)
+	assert.Error(t, err)
 }
