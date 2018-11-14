@@ -21,17 +21,20 @@ func NewFilter(patterns []string) *Filter {
 // Exclude ...
 func (f *Filter) Exclude(path string) (bool, error) {
 	var err error
-	if _, ok := f.cache[path]; ok {
-		return true, err
+	if v, ok := f.cache[path]; ok {
+		return v, err
 	}
 	for _, pattern := range f.patterns {
 		r, err := regexp.Compile(pattern)
 		if err != nil {
 			return false, err
 		}
-		if r.MatchString(path) {
+		v := r.MatchString(path)
+		if v {
+			f.cache[path] = true
 			return true, err
 		}
 	}
+	f.cache[path] = false
 	return false, err
 }
