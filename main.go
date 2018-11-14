@@ -11,15 +11,17 @@ import (
 )
 
 var (
-	confName string
-	specName string
-	initYAML bool
+	confName   string
+	specName   string
+	initYAML   bool
+	deployOnce bool
 )
 
 func main() {
 	flag.BoolVar(&initYAML, "init", false, "Generate caravan.yml in current path.")
 	flag.StringVar(&confName, "conf", caravan.DefaultConfName, "Config file name. Default: `caravan.yml`.")
 	flag.StringVar(&specName, "spec", caravan.DefaultSpec, "Spec name. Default: `master`.")
+	flag.BoolVar(&deployOnce, "once", false, "Deploy once. Default: false")
 	flag.Parse()
 
 	if initYAML {
@@ -47,7 +49,7 @@ func main() {
 		caravan.PrintNotice("Starting to watch...")
 		deployer := deploy.RSync{}
 
-		if conf.Once {
+		if conf.Once || deployOnce {
 			handleDeploy(*conf, deployer)
 			return
 		}
