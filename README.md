@@ -13,7 +13,7 @@ go get -u github.com/crispgm/go-van
 
 ## Usage
 
-Compare to Ruby version of Caravan, `go-van` highly depends on `caravan.yml`. It assumes that `caravan.yml` is already setup.
+Compared to Ruby version of Caravan, `go-van` highly depends on `caravan.yml`. It assumes that `caravan.yml` is already setup.
 
 ```shell
 $ go-van
@@ -43,3 +43,15 @@ $ go-van -init
 Creating `caravan.yml`...
 Make sure to specify `src` and `dst` to watch and deploy to right place.
 ```
+
+Deploy once:
+
+```shell
+$ go-van -once
+```
+
+## License
+
+MIT License.
+
+Copyright (c) 2018 David Zhang.
