@@ -15,7 +15,7 @@ func getRealPath(p string) string {
 }
 
 func initArgs() {
-	confName = "caravan.yml"
+	confName = getRealPath("caravan.yml")
 	specName = "master"
 	initYAML = false
 	deployOnce = false
