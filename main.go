@@ -47,7 +47,11 @@ func main() {
 		}
 		caravan.ShowConf(conf)
 		caravan.PrintNotice("Starting to watch...")
-		deployer := deploy.RSync{}
+		deployer := deploy.NewDeployer(conf.Mode)
+		if deployer == nil {
+			caravan.PrintError("Unsupported deploy mode:", conf.Mode)
+			return
+		}
 
 		if conf.Once || deployOnce {
 			handleDeploy(*conf, deployer)

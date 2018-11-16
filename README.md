@@ -15,6 +15,8 @@ go get -u github.com/crispgm/go-van
 
 Compared to Ruby version of Caravan, `go-van` highly depends on `caravan.yml`. It assumes that `caravan.yml` is already setup.
 
+And only `rsync` is supported.
+
 ```shell
 $ go-van
 Reading configuration...

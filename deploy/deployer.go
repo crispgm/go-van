@@ -12,3 +12,12 @@ const (
 type Deployer interface {
 	Run(string, string) ([]byte, error)
 }
+
+// NewDeployer create a specific deployer
+func NewDeployer(deployMethod Mode) Deployer {
+	switch deployMethod {
+	case ModeRSync:
+		return RSync{}
+	}
+	return nil
+}
