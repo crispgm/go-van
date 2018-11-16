@@ -46,7 +46,6 @@ func main() {
 			return
 		}
 		caravan.ShowConf(conf)
-		caravan.PrintNotice("Starting to watch...")
 		deployer := deploy.NewDeployer(conf.Mode)
 		if deployer == nil {
 			caravan.PrintError("Unsupported deploy mode:", conf.Mode)
@@ -54,10 +53,12 @@ func main() {
 		}
 
 		if conf.Once || deployOnce {
+			caravan.PrintNotice("Deploying at once and for once...")
 			handleDeploy(*conf, deployer)
 			return
 		}
 
+		caravan.PrintNotice("Starting to watch...")
 		caravan.Watch(*conf, func(ei notify.EventInfo) error {
 			f := caravan.NewFilter(conf.Exclude)
 			match, err := f.Exclude(ei.Path())
