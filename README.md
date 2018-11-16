@@ -50,6 +50,15 @@ Deploy once:
 
 ```shell
 $ go-van -once
+Reading configuration...
+=> debug: false
+=> once: false
+=> src: /path/to/src
+=> dst: david@remote:/path/to/dst
+=> deploy_mode: rsync
+=> incremental: true
+=> exclude: [.git .svn]
+Deploying at once and for once...
 ```
 
 ## License
