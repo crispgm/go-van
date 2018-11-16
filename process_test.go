@@ -35,14 +35,14 @@ func TestInitConf(t *testing.T) {
 func TestDeployOnceWithConf(t *testing.T) {
 	initArgs()
 	os.Remove(getRealPath("caravan.yml"))
-	os.Remove(getRealPath("fixtures/testsrc/file.txt"))
+	os.Remove(getRealPath("fixtures/testoutput/file.txt"))
 	caravan.DefaultConf.Once = true
 	caravan.DefaultConf.Source = getRealPath("fixtures/testsrc/")
 	caravan.DefaultConf.Destination = getRealPath("fixtures/testoutput/")
 	caravan.CreateDefault(getRealPath("caravan.yml"))
 	parseConfAndWatch()
 	assert.FileExists(t, getRealPath("fixtures/testoutput/file.txt"))
-	os.Remove(getRealPath("fixtures/testsrc/file.txt"))
+	os.Remove(getRealPath("fixtures/testoutput/file.txt"))
 	os.Remove(getRealPath("caravan.yml"))
 }
 
@@ -50,13 +50,13 @@ func TestDeployOnceWithArgs(t *testing.T) {
 	initArgs()
 	deployOnce = true
 	os.Remove(getRealPath("caravan.yml"))
-	os.Remove(getRealPath("fixtures/testsrc/file.txt"))
+	os.Remove(getRealPath("fixtures/testoutput/file.txt"))
 	caravan.DefaultConf.Source = getRealPath("fixtures/testsrc/")
 	caravan.DefaultConf.Destination = getRealPath("fixtures/testoutput/")
 	caravan.CreateDefault(getRealPath("caravan.yml"))
 	parseConfAndWatch()
 	assert.FileExists(t, getRealPath("fixtures/testoutput/file.txt"))
-	os.Remove(getRealPath("fixtures/testsrc/file.txt"))
+	os.Remove(getRealPath("fixtures/testoutput/file.txt"))
 	os.Remove(getRealPath("caravan.yml"))
 }
 
