@@ -8,7 +8,7 @@ import (
 )
 
 // PrintSuccess print green text
-var PrintSuccess = color.New(color.Bold, color.FgGreen).PrintlnFunc()
+var PrintSuccess = color.New(color.FgGreen).PrintlnFunc()
 
 // PrintWarning print yellow text
 var PrintWarning = color.New(color.Bold, color.FgYellow).PrintlnFunc()
@@ -17,7 +17,7 @@ var PrintWarning = color.New(color.Bold, color.FgYellow).PrintlnFunc()
 var PrintError = color.New(color.Bold, color.FgRed).PrintlnFunc()
 
 // PrintNotice print normal text
-var PrintNotice = color.New(color.FgWhite).PrintlnFunc()
+var PrintNotice = color.New(color.BgWhite).PrintlnFunc()
 
 // PrintLog print text with time and other info
 func PrintLog(text ...interface{}) {
