@@ -9,7 +9,7 @@ type RSync struct{}
 
 // Run do deployment with rsync
 func (r RSync) Run(src, dst string) ([]byte, error) {
-	cmd := exec.Command("rsync", "-avl", src, dst)
+	cmd := exec.Command("rsync", "-avl", src, dst, "--delete")
 	output, err := cmd.Output()
 	return output, err
 }
