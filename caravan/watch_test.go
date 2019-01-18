@@ -18,7 +18,7 @@ func TestWatchFile(t *testing.T) {
 	done := make(chan int)
 	go Watch(conf, func(ei notify.EventInfo) error {
 		defer close(done)
-		assert.Contains(t, ei.Path(), "github.com/crispgm/go-van/fixtures/testsrc/created_by_watch.test")
+		assert.Contains(t, ei.Path(), "fixtures/testsrc/created_by_watch.test")
 		return errTestBreak
 	})
 	time.Sleep(100 * time.Millisecond)
