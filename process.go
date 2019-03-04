@@ -32,7 +32,7 @@ func initConf() error {
 	return nil
 }
 
-func parseConfAndWatch() error {
+func parseConfAndWatch(inspect bool) error {
 	caravan.PrintNotice("Reading configuration...")
 	conf, err := caravan.LoadFrom(confName, specName)
 	if err != nil {
@@ -40,6 +40,10 @@ func parseConfAndWatch() error {
 		return err
 	}
 	caravan.ShowConf(conf)
+	if inspect {
+		return nil
+	}
+
 	deployer := deploy.NewDeployer(conf.Mode)
 	if deployer == nil {
 		caravan.PrintError("Unsupported deploy mode:", conf.Mode)

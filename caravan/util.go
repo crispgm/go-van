@@ -20,7 +20,8 @@ func ShowConf(conf *Conf) {
 	PrintNotice("=>", "exclude:", conf.Exclude)
 }
 
-func captureOutput(f func()) string {
+// CaptureOutput ...
+func CaptureOutput(f func()) string {
 	r, w, err := os.Pipe()
 	if err != nil {
 		panic(err)

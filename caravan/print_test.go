@@ -7,6 +7,6 @@ import (
 )
 
 func TestWarningSound(t *testing.T) {
-	output := captureOutput(func() { WarningSound() })
+	output := CaptureOutput(func() { WarningSound() })
 	assert.Equal(t, "\a", output)
 }

@@ -11,11 +11,13 @@ var (
 	confName   string
 	specName   string
 	initYAML   bool
+	inspect    bool
 	deployOnce bool
 )
 
 func main() {
 	flag.BoolVar(&initYAML, "init", false, "Generate caravan.yml in current path.")
+	flag.BoolVar(&inspect, "inspect", false, "Inspect config.")
 	flag.StringVar(&confName, "conf", caravan.DefaultConfName, "Config file name. Default: `caravan.yml`.")
 	flag.StringVar(&specName, "spec", caravan.DefaultSpec, "Spec name. Default: `master`.")
 	flag.BoolVar(&deployOnce, "once", false, "Deploy once. Default: false")
@@ -25,7 +27,7 @@ func main() {
 	if initYAML {
 		err = initConf()
 	} else {
-		err = parseConfAndWatch()
+		err = parseConfAndWatch(inspect)
 	}
 
 	if err != nil {

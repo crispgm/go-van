@@ -40,7 +40,7 @@ func TestDeployOnceWithConf(t *testing.T) {
 	caravan.DefaultConf.Source = getRealPath("fixtures/testsrc/")
 	caravan.DefaultConf.Destination = getRealPath("fixtures/testoutput/")
 	caravan.CreateDefault(getRealPath("caravan.yml"))
-	parseConfAndWatch()
+	parseConfAndWatch(false)
 	assert.FileExists(t, getRealPath("fixtures/testoutput/file.txt"))
 	os.Remove(getRealPath("fixtures/testoutput/file.txt"))
 	os.Remove(getRealPath("caravan.yml"))
@@ -54,7 +54,7 @@ func TestDeployOnceWithArgs(t *testing.T) {
 	caravan.DefaultConf.Source = getRealPath("fixtures/testsrc/")
 	caravan.DefaultConf.Destination = getRealPath("fixtures/testoutput/")
 	caravan.CreateDefault(getRealPath("caravan.yml"))
-	parseConfAndWatch()
+	parseConfAndWatch(false)
 	assert.FileExists(t, getRealPath("fixtures/testoutput/file.txt"))
 	os.Remove(getRealPath("fixtures/testoutput/file.txt"))
 	os.Remove(getRealPath("caravan.yml"))
@@ -62,7 +62,7 @@ func TestDeployOnceWithArgs(t *testing.T) {
 
 func TestLoadConfFail(t *testing.T) {
 	initArgs()
-	err := parseConfAndWatch()
+	err := parseConfAndWatch(false)
 	assert.Error(t, err)
 }
 
@@ -71,7 +71,18 @@ func TestUnsupportedMode(t *testing.T) {
 	os.Remove(getRealPath("caravan.yml"))
 	caravan.DefaultConf.Mode = "scp"
 	caravan.CreateDefault(getRealPath("caravan.yml"))
-	err := parseConfAndWatch()
+	err := parseConfAndWatch(false)
 	assert.Error(t, errUnsupportedMode, err)
+	os.Remove(getRealPath("caravan.yml"))
+}
+
+func TestInpsect(t *testing.T) {
+	initArgs()
+	confPath := getRealPath(caravan.DefaultConfName)
+	os.Remove(confPath)
+	err := initConf()
+	assert.NoError(t, err)
+	output := caravan.CaptureOutput(func() { parseConfAndWatch(true) })
+	assert.Equal(t, "Reading configuration...\n=> debug: false\n=> once: false\n=> source: .\n=> destination: .\n=> deploy_mode: rsync\n=> incremental: true\n=> exclude: [.git .svn /node_modules]\n", output)
 	os.Remove(getRealPath("caravan.yml"))
 }

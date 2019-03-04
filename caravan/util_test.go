@@ -7,8 +7,8 @@ import (
 )
 
 func TestShowConf(t *testing.T) {
-	output := captureOutput(func() { ShowConf(nil) })
+	output := CaptureOutput(func() { ShowConf(nil) })
 	assert.Empty(t, output)
-	output = captureOutput(func() { ShowConf(&DefaultConf) })
+	output = CaptureOutput(func() { ShowConf(&DefaultConf) })
 	assert.Contains(t, output, "debug")
 }
