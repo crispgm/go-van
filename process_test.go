@@ -83,6 +83,7 @@ func TestInpsect(t *testing.T) {
 	err := initConf()
 	assert.NoError(t, err)
 	output := caravan.CaptureOutput(func() { parseConfAndWatch(true) })
-	assert.Equal(t, "Reading configuration...\n=> debug: false\n=> once: false\n=> source: .\n=> destination: .\n=> deploy_mode: rsync\n=> incremental: true\n=> exclude: [.git .svn /node_modules]\n", output)
+	assert.Contains(t, output, "Reading configuration..")
+	assert.Contains(t, output, "=> deploy_mode: scp")
 	os.Remove(getRealPath("caravan.yml"))
 }
