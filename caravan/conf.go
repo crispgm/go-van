@@ -17,6 +17,7 @@ type Conf struct {
 	Debug       bool        `yaml:"debug"`
 	Incremental bool        `yaml:"incremental"`
 	Exclude     []string    `yaml:"exclude"`
+	ExtraArgs   []string    `yaml:"extra_args"`
 }
 
 // DefaultConf of Caravan
@@ -28,6 +29,7 @@ var DefaultConf = Conf{
 	Once:        false,
 	Debug:       false,
 	Exclude:     []string{".git", ".svn", "/node_modules"},
+	ExtraArgs:   []string{"--delete"},
 }
 
 const (

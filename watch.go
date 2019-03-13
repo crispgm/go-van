@@ -24,7 +24,7 @@ func watch(conf *caravan.Conf, deployer deploy.Deployer) {
 }
 
 func handleDeploy(conf caravan.Conf, deployer deploy.Deployer) error {
-	output, err := deployer.Run(conf.Source, conf.Destination)
+	output, err := deployer.Run(conf.Source, conf.Destination, conf.ExtraArgs)
 	if err != nil {
 		caravan.WarningSound()
 		caravan.PrintError(string(output))

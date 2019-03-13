@@ -8,8 +8,14 @@ import (
 type RSync struct{}
 
 // Run do deployment with rsync
-func (r RSync) Run(src, dst string) ([]byte, error) {
-	cmd := exec.Command("rsync", "-avl", src, dst, "--delete")
+func (r RSync) Run(src, dst string, extraArgs []string) ([]byte, error) {
+	args := []string{"-avl", src, dst}
+	if extraArgs != nil && len(extraArgs) > 0 {
+		for _, arg := range extraArgs {
+			args = append(args, arg)
+		}
+	}
+	cmd := exec.Command("rsync", args...)
 	output, err := cmd.Output()
 	return output, err
 }

@@ -10,7 +10,7 @@ const (
 
 // Deployer of a deploy method
 type Deployer interface {
-	Run(string, string) ([]byte, error)
+	Run(string, string, []string) ([]byte, error)
 }
 
 // NewDeployer create a specific deployer

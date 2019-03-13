@@ -8,6 +8,6 @@ import (
 
 func TestRsyncDeploy(t *testing.T) {
 	var rsync RSync
-	rsync.Run("../fixtures/testsrc/file.txt", "../fixtures/testoutput")
+	rsync.Run("../fixtures/testsrc/file.txt", "../fixtures/testoutput", nil)
 	assert.FileExists(t, "../fixtures/testoutput/file.txt")
 }
