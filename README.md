@@ -61,6 +61,40 @@ Reading configuration...
 Deploying at once and for once...
 ```
 
+## Configuration
+
+### Debug
+
+Show debug outputs.
+
+### Deploy Mode
+
+Only support rsync in `go-van`, compared to `caravan`.
+
+### Exclusion
+
+Exclusion denotes exclude path for watching, not deploying. Hence, use git/svn in source path instead of destination path.
+
+### Extra Arguments
+
+Extra arguments will be passed to deployer (e.g. `rsync`) as arguments.
+
+e.g. Support sync deletion:
+
+```yaml
+master:
+  src: .
+  dst: /path/to/project
+  debug: false
+  deploy_mode: rsync
+  incremental: true
+  extra_args:
+  - "--delete"
+  exclude:
+  - ".git"
+  - ".svn"
+```
+
 ## License
 
 MIT License.
