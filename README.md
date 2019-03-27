@@ -122,13 +122,13 @@ Only support rsync in `go-van`, compared to `caravan`.
 
 ### Exclusion
 
-Exclusion denotes exclude path for watching, not deploying. Hence, use git/svn in source path instead of destination path.
+Exclusion denotes exclude path for watching, not deploying. Hence, use git/svn in source path instead of destination path or checkout [Extra Arguments](#extra-arguments)
 
 ### Extra Arguments
 
 Extra arguments will be passed to deployer (e.g. `rsync`) as arguments.
 
-e.g. Support sync deletion:
+Support sync deletion:
 
 ```yaml
 master:
@@ -142,6 +142,13 @@ master:
   exclude:
   - ".git"
   - ".svn"
+```
+
+Ignore `.git` files, use `extra_args`:
+
+```yaml
+extra_args:
+- "--exclude=.git"
 ```
 
 ## License
