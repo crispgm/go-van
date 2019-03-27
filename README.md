@@ -3,7 +3,12 @@
 ![travis](https://travis-ci.org/crispgm/go-van.svg?branch=master)
 ![codecov](https://codecov.io/gh/crispgm/go-van/branch/master/graph/badge.svg)
 
-Go implementation of [Caravan](https://github.com/crispgm/caravan).
+A simple project files watcher and deployer, which syncs dev files to remote machines at ease.
+
+go-van is a Go implementation of [Caravan](https://github.com/crispgm/caravan). Compared to Ruby version of Caravan:
+
+* It highly depends on `caravan.yml`, which assumes that `caravan.yml` is already setup.
+* Only `rsync` is supported.
 
 ## Installation
 
@@ -11,32 +16,63 @@ Go implementation of [Caravan](https://github.com/crispgm/caravan).
 go get -u github.com/crispgm/go-van
 ```
 
+## Quick Start
+
+1. Init `caravan.yml`:
+
+    ```shell
+    $ go-van -init
+    Creating `caravan.yml`...
+    Make sure to specify `src` and `dst` to watch and deploy to right place.
+    ```
+
+2. Edit `caravan.yml`:
+
+    ```shell
+    # Open with your favorite editor, `vim` for example
+    $ vim caravan.yml
+    ```
+
+    Specify `src`, `dst`, and other configuration in `master` scope:
+
+    ```yaml
+    ---
+    master:
+      src: .
+      dst: user@target:/path/to/project
+      debug: false
+      deploy_mode: rsync
+      incremental: true
+      extra_args:
+      - "--delete"
+      - "--exclude=.git"
+      exclude:
+      - ".git"
+    ```
+
+3. Start to watch:
+
+    ```shell
+    $ go-van
+    Reading configuration...
+    => debug: false
+    => once: false
+    => source: .
+    => destination: .
+    => deploy_mode: rsync
+    => incremental: true
+    => extra_args: [--delete]
+    => exclude: [.git .svn /node_modules]
+    Starting to watch...
+    ```
+
+4. When a file is changed, it syncs:
+
+    ```shell
+    [20:46:05] Event 0x41217e0 /Users/david/path/to/file.py
+    ```
+
 ## Usage
-
-Compared to Ruby version of Caravan, `go-van` highly depends on `caravan.yml`. It assumes that `caravan.yml` is already setup.
-
-And only `rsync` is supported.
-
-```shell
-$ go-van
-Reading configuration...
-=> debug: false
-=> once: false
-=> src: /path/to/src
-=> dst: david@remote:/path/to/dst
-=> deploy_mode: rsync
-=> incremental: true
-=> exclude: [.git .svn]
-```
-
-And you may specify config file name and spec name.
-
-```shell
-# Specify config file name
-$ go-van -conf another_caravan.yml
-# And spec name
-$ go-van -conf another_caravan.yml -spec my_spec
-```
 
 Generate an empty `caravan.yml`:
 
@@ -46,18 +82,31 @@ Creating `caravan.yml`...
 Make sure to specify `src` and `dst` to watch and deploy to right place.
 ```
 
+Run with default:
+
+```shell
+# Default run, with `caravan.yml` and `master` spec
+$ go-van
+```
+
+And you may specify config file name and spec name:
+
+```shell
+# Special spec name
+$ go-van -spec my_spec
+# Specify config file name
+$ go-van -conf another_caravan.yml
+# And both
+$ go-van -conf another_caravan.yml -spec my_spec
+```
+
 Deploy once:
 
 ```shell
 $ go-van -once
 Reading configuration...
 => debug: false
-=> once: false
-=> src: /path/to/src
-=> dst: david@remote:/path/to/dst
-=> deploy_mode: rsync
-=> incremental: true
-=> exclude: [.git .svn]
+...
 Deploying at once and for once...
 ```
 
