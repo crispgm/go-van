@@ -17,6 +17,7 @@ var errTestBreak = errors.New("test break")
 // Watch a path
 func Watch(conf Conf, handleFunc HandleFunc) {
 	c := make(chan notify.EventInfo, 1)
+	logger := NewLogger(nil)
 
 	for {
 		realPath, err := filepath.Abs(conf.Source)
@@ -33,7 +34,7 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 
 		// Block until an event is received.
 		ei := <-c
-		PrintLog("Event", ei.Event().String, ei.Path())
+		logger.Log(ei.Event().String(), ei.Path(), "")
 		err = handleFunc(ei)
 		if err != nil {
 			PrintError("Handle event error:", err)
