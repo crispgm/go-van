@@ -13,6 +13,7 @@ var (
 	initYAML   bool
 	inspect    bool
 	deployOnce bool
+	isVersion  bool
 )
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 	flag.StringVar(&confName, "conf", caravan.DefaultConfName, "Config file name. Default: `caravan.yml`.")
 	flag.StringVar(&specName, "spec", caravan.DefaultSpec, "Spec name. Default: `master`.")
 	flag.BoolVar(&deployOnce, "once", false, "Deploy once. Default: false")
+	flag.BoolVar(&isVersion, "version", false, "Show version info")
 	flag.Parse()
 
 	var err error

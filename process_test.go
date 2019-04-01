@@ -89,3 +89,8 @@ func TestInpsect(t *testing.T) {
 	assert.Contains(t, output, "=> deploy_mode: scp")
 	os.Remove(getRealPath("caravan.yml"))
 }
+
+func TestVersion(t *testing.T) {
+	output := caravan.CaptureOutput(func() { version() })
+	assert.Contains(t, output, "go-van version")
+}

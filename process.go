@@ -9,6 +9,8 @@ import (
 	"github.com/crispgm/go-van/deploy"
 )
 
+const goVanVersion = "2.1.1"
+
 var (
 	errFileExisted     = errors.New("Conf file existed")
 	errUnsupportedMode = errors.New("Unsupported deploy mode")
@@ -57,4 +59,8 @@ func parseConfAndWatch(inspect bool) error {
 
 	watch(conf, deployer)
 	return nil
+}
+
+func version() {
+	caravan.PrintNotice("go-van version", goVanVersion)
 }
