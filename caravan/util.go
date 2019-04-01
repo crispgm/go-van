@@ -17,8 +17,9 @@ func ShowConf(conf *Conf) {
 	PrintNotice("=>", "destination:", conf.Destination)
 	PrintNotice("=>", "deploy_mode:", conf.Mode)
 	PrintNotice("=>", "incremental:", conf.Incremental)
-	PrintNotice("=>", "extra_args:", conf.ExtraArgs)
 	PrintNotice("=>", "exclude:", conf.Exclude)
+	PrintNotice("=>", "extra_args:", conf.ExtraArgs)
+	PrintNotice("=>", "log_format:", conf.LogFormat)
 }
 
 // CaptureOutput ...
