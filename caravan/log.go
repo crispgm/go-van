@@ -19,7 +19,7 @@ type LogFormat struct {
 var supportedLogFormat = []string{
 	"%t", // time in string
 	"%T", // timestamp
-	"%e", // event address
+	"%e", // event type
 	"%p", // full path
 	"%f", // file name
 }
@@ -46,7 +46,7 @@ func (lf *LogFormat) setTime() {
 }
 
 // Log input data as string
-func (lf LogFormat) Log(eventID, path, filename string) string {
+func (lf LogFormat) Log(event, path, filename string) string {
 	re := regexp.MustCompile(`(\%t|\%T|\%e|\%p|\%f)+`)
 	results := re.FindAllIndex([]byte(lf.format), -1)
 	lf.logBuffer = lf.format
@@ -55,14 +55,14 @@ func (lf LogFormat) Log(eventID, path, filename string) string {
 	for _, item := range results {
 		token := lf.format[item[0]:item[1]]
 		switch token {
-		case "%t":
+		case "%T":
 			lf.logBuffer = strings.Replace(lf.logBuffer, token, fmt.Sprintf("%d", lf.timestamp), 1)
 			break
-		case "%T":
+		case "%t":
 			lf.logBuffer = strings.Replace(lf.logBuffer, token, lf.timeString, 1)
 			break
 		case "%e":
-			lf.logBuffer = strings.Replace(lf.logBuffer, token, eventID, 1)
+			lf.logBuffer = strings.Replace(lf.logBuffer, token, event, 1)
 			break
 		case "%p":
 			lf.logBuffer = strings.Replace(lf.logBuffer, token, path, 1)

@@ -34,7 +34,7 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 
 		// Block until an event is received.
 		ei := <-c
-		logger.Log(ei.Event().String(), ei.Path(), "")
+		fmt.Println(logger.Log(ei.Event().String(), ei.Path(), ""))
 		err = handleFunc(ei)
 		if err != nil {
 			PrintError("Handle event error:", err)
