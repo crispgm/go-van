@@ -2,7 +2,6 @@ package caravan
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -54,7 +53,7 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 func isDir(realPath string) bool {
 	fi, err := os.Stat(realPath)
 	if err != nil {
-		fmt.Println(err)
+		PrintError(err)
 		return false
 	}
 	if mode := fi.Mode(); mode.IsDir() {
