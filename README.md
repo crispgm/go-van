@@ -122,7 +122,7 @@ Only support rsync in `go-van`, compared to `caravan`.
 
 ### Exclusion
 
-Exclusion denotes exclude path for watching, not deploying. Hence, use git/svn in source path instead of destination path or checkout [Extra Arguments](#extra-arguments)
+Exclusion denotes exclude path for watching, not deploying. Hence, use git/svn in source path instead of destination path or checkout [Extra Arguments](#extra-arguments).
 
 ### Extra Arguments
 
