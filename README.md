@@ -9,6 +9,7 @@ go-van is a Go implementation of [Caravan](https://github.com/crispgm/caravan). 
 
 * It highly depends on `caravan.yml`, which assumes that `caravan.yml` is already setup.
 * Only `rsync` is supported.
+* More powerful features (e.g. `extra_args` and `log_format`).
 
 ## Installation
 
