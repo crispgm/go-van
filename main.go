@@ -25,6 +25,11 @@ func main() {
 	flag.BoolVar(&isVersion, "version", false, "Show version info")
 	flag.Parse()
 
+	if isVersion {
+		version()
+		return
+	}
+
 	var err error
 	if initYAML {
 		err = initConf()
