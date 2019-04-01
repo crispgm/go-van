@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/rjeczalik/notify"
 )
@@ -17,6 +18,12 @@ var errTestBreak = errors.New("test break")
 // Watch a path
 func Watch(conf Conf, handleFunc HandleFunc) {
 	c := make(chan notify.EventInfo, 1)
+	var logger *LogFormat
+	if len(conf.LogFormat) > 0 {
+		logger = NewLogger(&conf.LogFormat)
+	} else {
+		logger = NewLogger(nil)
+	}
 
 	for {
 		realPath, err := filepath.Abs(conf.Source)
@@ -33,7 +40,7 @@ func Watch(conf Conf, handleFunc HandleFunc) {
 
 		// Block until an event is received.
 		ei := <-c
-		PrintLog("Event", ei.Event().String, ei.Path())
+		PrintNotice(logger.Log(ei.Event().String(), ei.Path(), getFileName(ei.Path())))
 		err = handleFunc(ei)
 		if err != nil {
 			PrintError("Handle event error:", err)
@@ -54,4 +61,12 @@ func isDir(realPath string) bool {
 		return true
 	}
 	return false
+}
+
+func getFileName(path string) string {
+	items := strings.Split(path, string(os.PathSeparator))
+	if len(items) <= 1 {
+		return path
+	}
+	return items[len(items)-1]
 }

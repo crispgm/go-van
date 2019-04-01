@@ -33,3 +33,7 @@ func TestIsDir(t *testing.T) {
 	assert.False(t, isDir("./aaa"))
 	assert.False(t, isDir("watch.go"))
 }
+
+func TestGetFileName(t *testing.T) {
+	assert.Equal(t, "fn", getFileName("/path/to/fn"))
+}
