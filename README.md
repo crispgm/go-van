@@ -128,7 +128,7 @@ Exclusion denotes exclude path for watching, not deploying. Hence, use git/svn i
 
 Extra arguments will be passed to deployer (e.g. `rsync`) as arguments.
 
-Support sync deletion:
+#### Support Sync with Deletion
 
 ```yaml
 master:
@@ -144,11 +144,25 @@ master:
   - ".svn"
 ```
 
-Ignore `.git` files, use `extra_args`:
+#### Ignore `.git` Files
 
 ```yaml
 extra_args:
 - "--exclude=.git"
+```
+
+#### Log Format
+
+Format:
+
+* `%t`: Time string, e.g. 16:25:01
+* `%T`: Timestamp
+* `%e`: Event type
+* `%p`: Path
+* `%f`: File name
+
+```yaml
+log_format: "[%t] Event <%e> %p"
 ```
 
 ## License

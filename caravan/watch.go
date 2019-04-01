@@ -18,7 +18,12 @@ var errTestBreak = errors.New("test break")
 // Watch a path
 func Watch(conf Conf, handleFunc HandleFunc) {
 	c := make(chan notify.EventInfo, 1)
-	logger := NewLogger(nil)
+	var logger *LogFormat
+	if len(conf.LogFormat) > 0 {
+		logger = NewLogger(&conf.LogFormat)
+	} else {
+		logger = NewLogger(nil)
+	}
 
 	for {
 		realPath, err := filepath.Abs(conf.Source)
