@@ -16,7 +16,7 @@ func watch(conf *caravan.Conf, deployer deploy.Deployer) {
 			return nil
 		}
 		if match {
-			caravan.PrintLog(ei.Path(), "is ignored")
+			caravan.PrintLog("IGNORE", ei.Path())
 			return nil
 		}
 		return handleDeploy(*conf, deployer)
