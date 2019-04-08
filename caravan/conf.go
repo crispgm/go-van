@@ -31,7 +31,7 @@ var DefaultConf = Conf{
 	Debug:       false,
 	Exclude:     []string{".git", ".svn", "/node_modules"},
 	ExtraArgs:   []string{"--delete"},
-	LogFormat:   "[%t] Event %e: %p",
+	LogFormat:   "[%t] EVENT %e: %p",
 }
 
 const (
