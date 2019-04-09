@@ -9,7 +9,7 @@ import (
 	"github.com/crispgm/go-van/deploy"
 )
 
-const goVanVersion = "2.1.1"
+const goVanVersion = "2.2.0"
 
 var (
 	errFileExisted     = errors.New("Conf file existed")

@@ -1,0 +1,18 @@
+fallback:
+  src: /path/to/fallback
+  dst: /Users/david/dev/test/to
+  debug: false
+  deploy_mode: rsync
+  incremental: true
+  exclude:
+  - .git
+  once: false
+fallbackerror:
+  src: /path/to/fallback
+  dst: /Users/david/dev/test/to
+  debug: false
+  deploy_mode: rsync
+  incremental: true
+  exclude:
+  - .git
+  once: false

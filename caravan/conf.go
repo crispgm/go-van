@@ -52,8 +52,14 @@ func LoadFrom(path, spec string) (*Conf, error) {
 	if err != nil {
 		return nil, err
 	}
-	if spec, ok := conf[spec]; ok {
-		return &spec, nil
+	if specConf, ok := conf[spec]; ok {
+		return &specConf, nil
+	}
+	if spec == DefaultSpec && len(conf) == 1 {
+		for specName, specConf := range conf {
+			PrintNotice("No spec name specified, choose", specName, "instead")
+			return &specConf, nil
+		}
 	}
 	return nil, errors.New("No spec")
 }
