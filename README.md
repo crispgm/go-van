@@ -23,8 +23,7 @@ go get -u github.com/crispgm/go-van
 
     ```shell
     $ go-van -init
-    Creating `caravan.yml`...
-    Make sure to specify `src` and `dst` to watch and deploy to right place.
+    Created caravan.yml in /path/to/project
     ```
 
 2. Edit `caravan.yml`:
@@ -70,7 +69,7 @@ go get -u github.com/crispgm/go-van
 4. When a file is changed, it syncs:
 
     ```shell
-    [20:46:05] Event 0x41217e0 /Users/david/path/to/file.py
+    [20:46:05] EVENT 0x41217e0 /Users/david/path/to/file.py
     ```
 
 ## Usage
@@ -79,8 +78,7 @@ Generate an empty `caravan.yml`:
 
 ```shell
 $ go-van -init
-Creating `caravan.yml`...
-Make sure to specify `src` and `dst` to watch and deploy to right place.
+Created caravan.yml in /path/to/project
 ```
 
 Run with default:
@@ -163,7 +161,7 @@ Format:
 * `%f`: File name
 
 ```yaml
-log_format: "[%t] Event <%e> %p"
+log_format: "[%t] EVENT <%e> %p"
 ```
 
 ## License

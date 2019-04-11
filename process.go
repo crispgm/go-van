@@ -17,7 +17,6 @@ var (
 )
 
 func initConf() error {
-	caravan.PrintNotice("Creating `caravan.yml`...")
 	cwd, _ := os.Getwd()
 	confPath := fmt.Sprintf("%s/%s", cwd, caravan.DefaultConfName)
 	_, err := os.Stat(confPath)
@@ -30,7 +29,7 @@ func initConf() error {
 		caravan.PrintError("Create default conf failed:", err)
 		return err
 	}
-	caravan.PrintNotice("Make sure to specify `src` and `dst` to watch and deploy to right place.")
+	caravan.PrintNotice("Created caravan.yml in", cwd)
 	return nil
 }
 
