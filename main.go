@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"os"
+	"os/signal"
 
 	"github.com/crispgm/go-van/caravan"
 )
@@ -34,6 +35,14 @@ func main() {
 	if initYAML {
 		err = initConf()
 	} else {
+		go func() {
+			sig := make(chan os.Signal, 10)
+			signal.Notify(sig, os.Interrupt)
+			<-sig
+			caravan.PrintNotice("\nInterrupted by <CTRL+C>")
+
+			os.Exit(0)
+		}()
 		err = parseConfAndWatch(inspect)
 	}
 
