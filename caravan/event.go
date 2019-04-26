@@ -84,8 +84,9 @@ func (ec *EventCtrl) EventLoop() {
 				}
 				if err != nil {
 					PrintError("SYSTEM Run hook error", err)
+				} else {
+					PrintSuccess("SYSTEM Invoke", getHookName(e.EventType), "-> output:", strings.Trim(strings.Join(outputs, "\n"), "\n\t "))
 				}
-				PrintSuccess("SYSTEM Invoke", getHookName(e.EventType), "-> output:", strings.Trim(strings.Join(outputs, "\n"), "\n\t "))
 			}
 		}
 	}()
