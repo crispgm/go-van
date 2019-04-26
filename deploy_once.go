@@ -9,7 +9,7 @@ type deployOnceEI struct {
 }
 
 func (do deployOnceEI) Event() notify.Event {
-	return 0
+	return notify.Event(0)
 }
 
 func (do deployOnceEI) Path() string {
