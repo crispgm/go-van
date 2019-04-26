@@ -1,6 +1,7 @@
 package caravan
 
 import (
+	"errors"
 	"os/exec"
 	"strings"
 )
@@ -29,6 +30,9 @@ type EventCtrl struct {
 	conf  Conf
 	event chan Event
 }
+
+// ErrNoCommand ...
+var ErrNoCommand = errors.New("No command attached")
 
 // NewEventCtrl creates an EventCtrl
 func NewEventCtrl(conf *Conf) *EventCtrl {
@@ -72,13 +76,16 @@ func (ec *EventCtrl) EventLoop() {
 			select {
 			case e := <-ec.event:
 				if ec.conf.Debug {
-					PrintNotice("SYSTEM Handling event:", e)
+					PrintNotice("SYSTEM Handling event:", getHookName(e.EventType), "on", e.Filename)
 				}
 				outputs, err := ec.runEventHook(e)
+				if err == ErrNoCommand {
+					return
+				}
 				if err != nil {
 					PrintError("SYSTEM Run hook error", err)
 				}
-				PrintNotice(outputs)
+				PrintSuccess("SYSTEM Invoke", getHookName(e.EventType), "-> output:", strings.Trim(strings.Join(outputs, "\n"), "\n\t "))
 			}
 		}
 	}()
@@ -104,7 +111,7 @@ func (ec EventCtrl) runEventHook(event Event) ([]string, error) {
 
 func runCommands(commands []string) ([]string, error) {
 	if len(commands) == 0 {
-		return nil, nil
+		return nil, ErrNoCommand
 	}
 	var outputs []string
 	for _, command := range commands {
@@ -122,4 +129,21 @@ func runCommands(commands []string) ([]string, error) {
 		}
 	}
 	return outputs, nil
+}
+
+func getHookName(et EventType) string {
+	var hookName string
+	switch et {
+	case HookOnInit:
+		hookName = "OnInit"
+	case HookOnChange:
+		hookName = "OnChange"
+	case HookOnDeploy:
+		hookName = "OnDeploy"
+	case HookOnError:
+		hookName = "OnError"
+	default:
+		hookName = ""
+	}
+	return hookName
 }
