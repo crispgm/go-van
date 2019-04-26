@@ -1,11 +1,19 @@
-# go-van
+# Caravan (go-van)
 
 ![travis](https://travis-ci.org/crispgm/go-van.svg?branch=master)
 ![codecov](https://codecov.io/gh/crispgm/go-van/branch/master/graph/badge.svg)
 
 A simple project files watcher and deployer, which syncs dev files to remote machines at ease.
 
-go-van is a Go implementation of [Caravan](https://github.com/crispgm/caravan). Compared to Ruby version of Caravan:
+go-van is the Go implementation of [Caravan](https://github.com/crispgm/caravan).
+
+![Caravan in Civ5](/assets/civ-5-caravan.png)
+
+This is the caravan in [Sid Meier's Civilization V](http://www.civilization5.com/), where the project name originally comes from.
+
+## Migrate from Ruby Caravan
+
+Compared to Ruby version of Caravan:
 
 * It highly depends on `caravan.yml`, which assumes that `caravan.yml` is already setup.
 * Only `rsync` is supported.
