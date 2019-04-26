@@ -14,6 +14,8 @@ const goVanVersion = "2.2.0"
 var (
 	errFileExisted     = errors.New("Conf file existed")
 	errUnsupportedMode = errors.New("Unsupported deploy mode")
+
+	eventCtrl *caravan.EventCtrl
 )
 
 func initConf() error {
@@ -44,6 +46,10 @@ func parseConfAndWatch(inspect bool) error {
 	if inspect {
 		return nil
 	}
+
+	eventCtrl = caravan.NewEventCtrl(conf)
+	eventCtrl.EventLoop()
+	eventCtrl.FireEvent(caravan.NewEmptyEvent(caravan.HookOnInit))
 
 	deployer := deploy.NewDeployer(conf.Mode)
 	if deployer == nil {

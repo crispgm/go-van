@@ -19,6 +19,7 @@ func watch(conf *caravan.Conf, deployer deploy.Deployer) {
 			caravan.PrintLog("IGNORE", ei.Path())
 			return nil
 		}
+		eventCtrl.FireEvent(caravan.NewEvent(caravan.HookOnChange, 0, ei.Path(), caravan.GetFileName(ei.Path())))
 		return handleDeploy(*conf, deployer)
 	})
 }
@@ -28,6 +29,8 @@ func handleDeploy(conf caravan.Conf, deployer deploy.Deployer) error {
 	if err != nil {
 		caravan.WarningSound()
 		caravan.PrintError(string(output))
+		eventCtrl.FireEvent(caravan.NewEvent(caravan.HookOnError))
 	}
+	eventCtrl.FireEvent(caravan.NewEvent(caravan.HookOnDeploy))
 	return err
 }
