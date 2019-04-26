@@ -35,10 +35,10 @@ func TestIsDir(t *testing.T) {
 }
 
 func TestGetFileName(t *testing.T) {
-	assert.Equal(t, "fn", getFileName("/path/to/fn"))
-	assert.Equal(t, "fn", getFileName("to/../fn"))
-	assert.Equal(t, "fn", getFileName("../fn"))
-	assert.Equal(t, "fn", getFileName("to/fn"))
-	assert.Equal(t, "fn", getFileName("fn"))
-	assert.Equal(t, "", getFileName(""))
+	assert.Equal(t, "fn", GetFileName("/path/to/fn"))
+	assert.Equal(t, "fn", GetFileName("to/../fn"))
+	assert.Equal(t, "fn", GetFileName("../fn"))
+	assert.Equal(t, "fn", GetFileName("to/fn"))
+	assert.Equal(t, "fn", GetFileName("fn"))
+	assert.Equal(t, "", GetFileName(""))
 }

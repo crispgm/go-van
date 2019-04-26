@@ -9,11 +9,13 @@ import (
 	"github.com/crispgm/go-van/deploy"
 )
 
-const goVanVersion = "2.2.0"
+const goVanVersion = "3.0.0"
 
 var (
 	errFileExisted     = errors.New("Conf file existed")
 	errUnsupportedMode = errors.New("Unsupported deploy mode")
+
+	eventCtrl *caravan.EventCtrl
 )
 
 func initConf() error {
@@ -45,6 +47,10 @@ func parseConfAndWatch(inspect bool) error {
 		return nil
 	}
 
+	eventCtrl = caravan.NewEventCtrl(conf)
+	eventCtrl.EventLoop()
+	eventCtrl.FireEvent(caravan.NewEmptyEvent(caravan.HookOnInit))
+
 	deployer := deploy.NewDeployer(conf.Mode)
 	if deployer == nil {
 		caravan.PrintError("Unsupported deploy mode:", conf.Mode)
@@ -53,7 +59,10 @@ func parseConfAndWatch(inspect bool) error {
 
 	if conf.Once || deployOnce {
 		caravan.PrintNotice("Deploying at once and for once...")
-		return handleDeploy(*conf, deployer)
+		do := deployOnceEI{
+			SourcePath: conf.Source,
+		}
+		return handleDeploy(*conf, deployer, do)
 	}
 
 	watch(conf, deployer)
