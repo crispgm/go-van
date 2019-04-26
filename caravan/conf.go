@@ -19,6 +19,10 @@ type Conf struct {
 	Exclude     []string    `yaml:"exclude"`
 	ExtraArgs   []string    `yaml:"extra_args"`
 	LogFormat   string      `yaml:"log_format"`
+	OnInit      []string    `yaml:"on_init"`
+	OnChange    []string    `yaml:"on_change"`
+	OnDeploy    []string    `yaml:"on_deploy"`
+	OnError     []string    `yaml:"on_error"`
 }
 
 // DefaultConf of Caravan
@@ -32,6 +36,10 @@ var DefaultConf = Conf{
 	Exclude:     []string{".git", ".svn", "/node_modules"},
 	ExtraArgs:   []string{},
 	LogFormat:   "[%t] EVENT %e: %p",
+	OnInit:      []string{},
+	OnChange:    []string{},
+	OnDeploy:    []string{},
+	OnError:     []string{},
 }
 
 const (
