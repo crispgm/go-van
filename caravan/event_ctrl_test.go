@@ -11,7 +11,7 @@ import (
 func TestFireEvent(t *testing.T) {
 	conf := &caravan.Conf{
 		Debug:  true,
-		OnInit: []string{"ls"},
+		OnInit: []string{"ls", "echo \"i love van\""},
 	}
 	output := caravan.CaptureOutput(func() {
 		eventCtrl := caravan.NewEventCtrl(conf)
@@ -20,4 +20,5 @@ func TestFireEvent(t *testing.T) {
 		time.Sleep(1000 * time.Millisecond)
 	})
 	assert.Contains(t, output, "SYSTEM Handling event")
+	assert.Contains(t, output, "i love van")
 }

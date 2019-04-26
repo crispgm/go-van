@@ -2,6 +2,7 @@ package caravan
 
 import (
 	"os/exec"
+	"strings"
 )
 
 // EventType of a event
@@ -107,8 +108,14 @@ func runCommands(commands []string) ([]string, error) {
 	}
 	var outputs []string
 	for _, command := range commands {
-		cmd := exec.Command(command)
-		output, err := cmd.Output()
+		realCommand := strings.Split(command, " ")
+		var cmd *exec.Cmd
+		if len(realCommand) == 1 {
+			cmd = exec.Command(realCommand[0])
+		} else {
+			cmd = exec.Command(realCommand[0], realCommand[1:]...)
+		}
+		output, err := cmd.CombinedOutput()
 		outputs = append(outputs, string(output))
 		if err != nil {
 			return outputs, err
