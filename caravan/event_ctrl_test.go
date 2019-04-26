@@ -19,6 +19,5 @@ func TestFireEvent(t *testing.T) {
 		eventCtrl.FireEvent(caravan.NewEmptyEvent(caravan.HookOnInit))
 		time.Sleep(1000 * time.Millisecond)
 	})
-	assert.Contains(t, output, "SYSTEM Handling event")
-	assert.Contains(t, output, "i love van")
+	assert.Contains(t, output, "SYSTEM Handling event: OnInit on")
 }
