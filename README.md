@@ -172,6 +172,23 @@ Format:
 log_format: "[%t] EVENT <%e> %p"
 ```
 
+## Event Hooks
+
+This feature is EXPERIMENTAL and is not well tested. Use at your own risk.
+
+Event hooks are designed to handle the event with hooks, by which users may add their scripts.
+
+There are four hooks exposed, which are `OnInit` `OnChange` `OnDeploy` `OnError`.
+
+e.g. You may add `OnInit` in `caravan.yml`:
+
+```yaml
+on_init:
+- echo "go-van is initializing"
+on_change:
+- make
+```
+
 ## License
 
 MIT License.
