@@ -1,4 +1,4 @@
-package main
+package caravan
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestDeployOnceStruct(t *testing.T) {
-	ei := deployOnceEI{
+	ei := DeployOnceEI{
 		SourcePath: "test",
 	}
 	assert.Equal(t, "test", ei.Path())

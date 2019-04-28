@@ -62,6 +62,7 @@ func isDir(realPath string) bool {
 	return false
 }
 
+// GetFileName extracts file name from path
 func GetFileName(path string) string {
 	items := strings.Split(path, string(os.PathSeparator))
 	if len(items) <= 1 {

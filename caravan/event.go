@@ -9,8 +9,8 @@ import (
 // EventType of a event
 type EventType int8
 
+// Event hooks
 const (
-	// Event hooks
 	HookOnInit EventType = iota
 	HookOnChange
 	HookOnDeploy

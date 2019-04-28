@@ -59,7 +59,7 @@ func parseConfAndWatch(inspect bool) error {
 
 	if conf.Once || deployOnce {
 		caravan.PrintNotice("Deploying at once and for once...")
-		do := deployOnceEI{
+		do := caravan.DeployOnceEI{
 			SourcePath: conf.Source,
 		}
 		return handleDeploy(*conf, deployer, do)
