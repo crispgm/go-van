@@ -14,7 +14,7 @@ type Filter struct {
 func NewFilter(patterns []string) *Filter {
 	return &Filter{
 		patterns: patterns,
-		cache:    make(map[string]bool, 0),
+		cache:    make(map[string]bool),
 	}
 }
 

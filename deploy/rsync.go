@@ -11,9 +11,8 @@ type RSync struct{}
 func (r RSync) Run(src, dst string, extraArgs []string) ([]byte, error) {
 	args := []string{"-avl", src, dst}
 	if extraArgs != nil && len(extraArgs) > 0 {
-		for _, arg := range extraArgs {
-			args = append(args, arg)
-		}
+		args = append(args, extraArgs...)
+
 	}
 	cmd := exec.Command("rsync", args...)
 	output, err := cmd.Output()

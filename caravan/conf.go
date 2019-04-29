@@ -74,7 +74,7 @@ func LoadFrom(path, spec string) (*Conf, error) {
 
 // CreateDefault conf
 func CreateDefault(path string) error {
-	var defaultConf = make(map[string]Conf, 0)
+	var defaultConf = make(map[string]Conf)
 	defaultConf[DefaultSpec] = DefaultConf
 	out, err := yaml.Marshal(defaultConf)
 	if err != nil {

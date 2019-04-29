@@ -57,19 +57,14 @@ func (lf LogFormat) Log(event, path, filename string) string {
 		switch token {
 		case "%T":
 			lf.logBuffer = strings.Replace(lf.logBuffer, token, fmt.Sprintf("%d", lf.timestamp), 1)
-			break
 		case "%t":
 			lf.logBuffer = strings.Replace(lf.logBuffer, token, lf.timeString, 1)
-			break
 		case "%e":
 			lf.logBuffer = strings.Replace(lf.logBuffer, token, event, 1)
-			break
 		case "%p":
 			lf.logBuffer = strings.Replace(lf.logBuffer, token, path, 1)
-			break
 		case "%f":
 			lf.logBuffer = strings.Replace(lf.logBuffer, token, filename, 1)
-			break
 		default:
 			break
 		}
