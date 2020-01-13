@@ -11,7 +11,7 @@ type EventType int8
 
 // Event hooks
 const (
-	HookOnInit EventType = iota
+	HookOnInit EventType = iota + 1
 	HookOnChange
 	HookOnDeploy
 	HookOnError
