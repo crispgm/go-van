@@ -15,12 +15,12 @@ func (do DeployOnceEI) Event() notify.Event {
 	return notify.Event(0)
 }
 
-// Event returns path
+// Path returns event path
 func (do DeployOnceEI) Path() string {
 	return do.SourcePath
 }
 
-// Event return sys as nil
+// Sys return sys as nil
 func (do DeployOnceEI) Sys() interface{} {
 	return nil
 }
