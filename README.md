@@ -15,9 +15,9 @@ This is the caravan in [Sid Meier's Civilization V](http://www.civilization5.com
 
 Compared to Ruby version of Caravan:
 
-* It highly depends on `caravan.yml`, which assumes that `caravan.yml` is already setup.
-* Only `rsync` is supported.
-* More powerful features (e.g. `extra_args` and `log_format`).
+- It highly depends on `caravan.yml`, which assumes that `caravan.yml` is already setup.
+- Only `rsync` is supported.
+- More powerful features (e.g. `extra_args` and `log_format`).
 
 ## Installation
 
@@ -29,56 +29,56 @@ go get -u github.com/crispgm/go-van
 
 1. Init `caravan.yml`:
 
-    ```shell
-    $ go-van -init
-    Created caravan.yml in /path/to/project
-    ```
+   ```shell
+   $ go-van -init
+   Created caravan.yml in /path/to/project
+   ```
 
 2. Edit `caravan.yml`:
 
-    ```shell
-    # Open with your favorite editor, `vim` for example
-    $ vim caravan.yml
-    ```
+   ```shell
+   # Open with your favorite editor, `vim` for example
+   $ vim caravan.yml
+   ```
 
-    Specify `src`, `dst`, and other configuration in `master` scope:
+   Specify `src`, `dst`, and other configuration in `master` scope:
 
-    ```yaml
-    ---
-    master:
-      src: .
-      dst: user@target:/path/to/project
-      debug: false
-      deploy_mode: rsync
-      incremental: true
-      extra_args:
-      - "--delete"
-      - "--exclude=.git"
-      exclude:
-      - ".git"
-    ```
+   ```yaml
+   ---
+   master:
+     src: .
+     dst: user@target:/path/to/project
+     debug: false
+     deploy_mode: rsync
+     incremental: true
+     extra_args:
+       - "--delete"
+       - "--exclude=.git"
+     exclude:
+       - ".git"
+   ```
 
 3. Start to watch:
 
-    ```shell
-    $ go-van
-    Reading configuration...
-    => debug: false
-    => once: false
-    => source: .
-    => destination: .
-    => deploy_mode: rsync
-    => incremental: true
-    => extra_args: [--delete]
-    => exclude: [.git .svn /node_modules]
-    Starting to watch...
-    ```
+   ```shell
+   $ go-van
+   Reading configuration...
+   => debug: false
+   => once: false
+   => source: .
+   => destination: .
+   => deploy_mode: rsync
+   => incremental: true
+   => extra_args: [--delete]
+   => exclude: [.git .svn /node_modules]
+   Starting to watch...
+   ```
 
 4. When a file is changed, it syncs:
 
-    ```shell
-    [20:46:05] EVENT 0x41217e0 /Users/david/path/to/file.py
-    ```
+   ```shell
+   [20:46:05] EVENT 0x41217e0 /Users/david/path/to/file.py
+   ```
 
 ## Usage
 
@@ -145,28 +145,28 @@ master:
   deploy_mode: rsync
   incremental: true
   extra_args:
-  - "--delete"
+    - "--delete"
   exclude:
-  - ".git"
-  - ".svn"
+    - ".git"
+    - ".svn"
 ```
 
 #### Ignore `.git` Files
 
 ```yaml
 extra_args:
-- "--exclude=.git"
+  - "--exclude=.git"
 ```
 
 #### Log Format
 
 Format:
 
-* `%t`: Time string, e.g. 16:25:01
-* `%T`: Timestamp
-* `%e`: Event type
-* `%p`: Path
-* `%f`: File name
+- `%t`: Time string, e.g. 16:25:01
+- `%T`: Timestamp
+- `%e`: Event type
+- `%p`: Path
+- `%f`: File name
 
 ```yaml
 log_format: "[%t] EVENT <%e> %p"
@@ -184,13 +184,13 @@ e.g. You may add `OnInit` in `caravan.yml`:
 
 ```yaml
 on_init:
-- echo "go-van is initializing"
+  - echo "go-van is initializing"
 on_change:
-- make
+  - make
 ```
 
 ## License
 
 MIT License.
 
-Copyright (c) 2019 David Zhang.
+Copyright (c) 2020 David Zhang.
