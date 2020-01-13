@@ -62,6 +62,7 @@ func NewEvent(et EventType, ev string, path string, filename string) *Event {
 // FireEvent fires a event
 func (ec EventCtrl) FireEvent(event *Event) {
 	go func() {
+		ec.debug("SYSTEM Firing event:", getHookName(event.EventType), "on", event.Filename)
 		ec.event <- *event
 	}()
 }
@@ -69,21 +70,16 @@ func (ec EventCtrl) FireEvent(event *Event) {
 // EventLoop starts event loop
 func (ec *EventCtrl) EventLoop() {
 	go func() {
-		if ec.conf.Debug {
-			PrintNotice("SYSTEM Start event loop")
-		}
+		ec.debug("SYSTEM Start event loop")
 		for {
 			select {
 			case e := <-ec.event:
-				if ec.conf.Debug {
-					PrintNotice("SYSTEM Handling event:", getHookName(e.EventType), "on", e.Filename)
-				}
+				ec.debug("SYSTEM Handling event:", getHookName(e.EventType), "on", e.Filename)
 				outputs, err := ec.runEventHook(e)
 				if err == ErrNoCommand {
-					return
-				}
-				if err != nil {
-					PrintError("SYSTEM Run hook error", err)
+					ec.debug("SYSTEM no hooks on:", getHookName(e.EventType))
+				} else if err != nil {
+					PrintError("SYSTEM Run hook error:", err)
 				} else {
 					PrintSuccess("SYSTEM Invoke", getHookName(e.EventType), "-> output:", strings.Trim(strings.Join(outputs, "\n"), "\n\t "))
 				}
@@ -95,6 +91,7 @@ func (ec *EventCtrl) EventLoop() {
 func (ec EventCtrl) runEventHook(event Event) ([]string, error) {
 	var outputs []string
 	var err error
+	ec.debug("SYSTEM Run event hook:", getHookName(event.EventType))
 	switch event.EventType {
 	case HookOnInit:
 		outputs, err = runCommands(ec.conf.OnInit)
@@ -117,6 +114,7 @@ func runCommands(commands []string) ([]string, error) {
 	var outputs []string
 	for _, command := range commands {
 		realCommand := strings.Split(command, " ")
+		PrintNotice("SYSTEM Run:", realCommand)
 		var cmd *exec.Cmd
 		if len(realCommand) == 1 {
 			cmd = exec.Command(realCommand[0])
@@ -147,4 +145,10 @@ func getHookName(et EventType) string {
 		hookName = ""
 	}
 	return hookName
+}
+
+func (ec EventCtrl) debug(a ...interface{}) {
+	if ec.conf.Debug {
+		PrintNotice(a...)
+	}
 }
