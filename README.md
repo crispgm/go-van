@@ -1,6 +1,6 @@
 # Caravan (go-van)
 
-![travis](https://travis-ci.org/crispgm/go-van.svg?branch=master)
+![github-workflow-ci](https://github.com/crispgm/go-van/workflows/ci/badge.svg)
 ![codecov](https://codecov.io/gh/crispgm/go-van/branch/master/graph/badge.svg)
 
 A simple project files watcher and deployer, which syncs dev files to remote machines at ease.
